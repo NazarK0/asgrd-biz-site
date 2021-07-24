@@ -2,6 +2,7 @@ const util = require('util');
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
 const { v4: uuidv4 } = require('uuid');
+const { saveUser, findUserByEmail, findUserById, setUserStatusVerifiedById } = require('../helperFunctions/googleSheets');
 
 const postRegisterForm = async (req, res) => {
   const { 
@@ -10,6 +11,8 @@ const postRegisterForm = async (req, res) => {
     mailTo=null,
     password=null,
   } = req.body;
+
+  const {refId=null} = req.query;
 
   if (!name || !mailFrom || !mailTo || !password ) {
     return res.status(500).json({ message: 'Not all data for registration is present'})
@@ -30,9 +33,13 @@ const postRegisterForm = async (req, res) => {
         verified: false
       }
 
-      // await User.create(userData);
+      if(refId) {
+        userData.referalId = refId;
+      }
 
-      return res.status(200).json(userData);
+      await saveUser(userData);
+
+      return res.sendStatus(200);
     } catch (error) {
       console.error(error)
       return res.status(500).json({ message: 'Error generating the secret'})
@@ -43,65 +50,92 @@ const postRegisterForm = async (req, res) => {
 const postLoginForm = async (req, res) => {
   const { email, password } = req.body;
 
-  //find user in google sheet
-  const user = true;
+  try {
+    const user = await findUserByEmail(email);
 
-  if (!user) {
-    res.status(401).json({ message: 'Wrong authorization data'});
-  } else {
-    res.status(200).json({ message: 'Authorized'});
+    if (!user) {
+      res.status(401).json({ message: 'Wrong authorization data'});
+    } else {
+      if (user.password === password) {
+        res.status(200).json({ message: 'Authorized'});
+      } else {
+        res.status(401).json({ message: 'Wrong password'});
+      }
+    }
+  } catch (error) {
+    console.error(error);
+
+    if (error instanceof FetchError) {
+      res.sendStatus(504);
+    } else {
+      res.sendStatus(500);
+    }
   }
-
-  
-
 };
 
 const get2FA = async (req, res) => {
   const { id } = req.params;
-  // find user
-  const user = true;
-  if (!user) {
-    res.status(401).json({ message: 'Fake user'});
-  }
 
-  const { verified, secret, otpauthURL } = user;
+  try {
+    const user = await findUserById(id);
 
-  if (!verified) {
-    const QRtoDataURL = util.promisify(QRCode.toDataURL);
-    const verifyQR = await QRtoDataURL(otpauthURL)
-    res.status(200).json({ verified, secret, verifyQR, id });
-  } else {
-    res.status(200).json({ verified, id });
+    if (!user) {
+      res.status(401).json({ message: 'Fake user'});
+    } else {
+      const { verified, secret, otpauthURL } = user;
+
+      if (verified === 'FALSE') {
+        const QRtoDataURL = util.promisify(QRCode.toDataURL);
+        const verifyQR = await QRtoDataURL(otpauthURL)
+        res.status(200).json({ verified, secret, verifyQR, id });
+      } else if (verified === 'TRUE') {
+        res.status(200).json({ verified, id });
+      } else {
+        res.status(500).json({ message: 'Wrong input data'})
+      }
+    }
+  } catch (error) {
+    console.error(error);
+
+    if (error instanceof FetchError) {
+      res.sendStatus(504);
+    } else {
+      res.sendStatus(500);
+    }
   }
-  
 }
 const post2FAForm = async (req, res) => {
   const { token, id } = req.body;
 
   try {
-    // find user in google sheets
+    const user = await findUserById(id);
 
-    const secret = user.secret;
-
-    const verified = speakeasy.totp.verify({ 
-      secret,
-      encoding: 'base32',
-      token 
-    });
-
-    if (verified) {
-      // await User.update({ verified: true }, {
-      //   where: {
-      //     id: userId
-      //   }
-      // });
-      res.status(200).json({ verified: true })
+    if (!user) {
+      res.status(401).json({ message: 'Fake user'});
     } else {
-      res.status(401).json({ verified: false })
+      const secret = user.secret;
+
+      const verified = speakeasy.totp.verify({ 
+        secret,
+        encoding: 'base32',
+        token 
+      });
+
+      if (verified) {
+        await setUserStatusVerifiedById(id);
+        res.status(200).json({ verified: true })
+      } else {
+        res.status(401).json({ verified: false })
+      }
     }
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Error finding user'})
+    console.error(error);
+
+    if (error instanceof FetchError) {
+      res.sendStatus(504);
+    } else {
+      res.status(500);
+    }
   }
 }
 
