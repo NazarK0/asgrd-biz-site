@@ -1,9 +1,15 @@
+const { sendEmail2 } = require('../helperFunctions/gmail');
+
+const postOAuth2 = async (req, res) => {
+
+}
+
 
 const postSendMail = async (req, res) => {
   const { recepientMail } = req.body;
   
   try {
-    await sendEmail('Name', recepientMail);
+    await sendEmail2('Name', recepientMail);
     res.sendStatus(200);
   } catch (error) {
     console.error(error);
@@ -13,4 +19,5 @@ const postSendMail = async (req, res) => {
 
 module.exports = {
   postSendMail,
+  postOAuth2,
 }
