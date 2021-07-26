@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <script src="../js/fetch/postRegistryForm.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Регистрация</h1>
+    <form id="register-user-form">
+      <div class="form-group">
+        <label for="user-name">Имя</label>
+        <input type="text" id="user-name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="user-email">E-mail</label>
+        <input type="email" id="user-email" name="mailFrom" required>
+      </div>
+      <div class="form-group">
+        <label for="user-password">Пароль</label>
+        <input type="password" id="user-password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="user-password2">Пароль еще раз</label>
+        <input type="password" id="user-password2" name="password2" required>
+      </div>
+      <div class="ctrl-buttons">
+        <a href="index.html" class="btn">Назад</a>
+        <button class="btn" type="submit">Зарегестрироваться</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

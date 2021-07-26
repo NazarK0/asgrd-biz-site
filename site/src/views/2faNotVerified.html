@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h3>Eще один шаг ради Вашей безопасности</h3>
+    <div class="verify-page">
+      <div class="info">
+        <h3>Отсканируйте QR-код или введите ключ в Google Authentificator</h3>
+        <div class="info-group">
+          <label for="">QR-код</label>
+          <img src="" alt="QR code 404">
+        </div>
+        <div class="info-group">
+          <label for="">Секретный ключ</label>
+          <input type="text" name="" id="" readonly>
+        </div>
+      </div>
+      <form action="/api/2fa/:id" method="post">
+        <div class="form-group">
+          <label for="token">Токен с Google Authenticator</label>
+          <input type="text" id="token" name="token">
+          <input type="hidden" id="userId" name="userId">
+        </div>
+        <button class="btn" type="submit">Проверить</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

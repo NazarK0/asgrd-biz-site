@@ -1,9 +1,13 @@
 const router = require("express").Router();
+const multer = require('multer')();
+const bodyParser = require('body-parser');
 const controller = require("../controllers/authController");
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router
   .route('/api/register')
-  .post(controller.postRegisterForm);
+  .post(urlencodedParser, multer.none(), controller.postRegisterForm);
 router
   .route('/api/login')
   .post(controller.postLoginForm);

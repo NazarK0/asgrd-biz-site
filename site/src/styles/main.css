@@ -1,0 +1,93 @@
+body {
+  background-color: rgb(224, 148, 97);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:end;
+  height: 100vh;
+  
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input {
+  border: 0;
+  outline: 0;
+}
+
+input {
+  height: 30px;
+  width: 290px;
+  background-color: rgba(255, 255, 255, 0.473);
+}
+
+
+body>.container {
+  background-color: rgb(245, 87, 24);
+  width: 70vw;
+  height: 70vh;
+  padding: 12px;
+  box-shadow: 3px 0px 22px rgba(46, 46, 46, 0.774);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.btn {
+  display: block;
+  width: 150px;
+  height: 45px;
+  background-color: rgba(40, 147, 209, 0.726);
+  box-shadow: 2px 2px 6px rgba(46, 46, 46, 0.774);
+  margin: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ctrl-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.form-group,
+.info-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.form-group label,
+.info-group label {
+  margin-right: 5px;
+}
+
+form {
+  width: fit-content;
+}
+
+.verify-page {
+  display: flex;
+}
+
+.verify-page .info {
+  margin-right: 20px;
+}

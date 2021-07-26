@@ -12,7 +12,7 @@ const SECRET_INDEX = 7;
 const QR_INDEX = 8;
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, '../../..', 'credentials.json'),
+  keyFile: path.join(__dirname, '../..', 'credentials.json'),
   scopes,
 });
 

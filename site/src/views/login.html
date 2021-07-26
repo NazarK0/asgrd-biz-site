@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Вход</h1>
+    <form action="/api/register" method="post">
+      <div class="form-group">
+        <label for="user-email">E-mail</label>
+        <input type="email" id="user-email" name="userEmail" required>
+      </div>
+      <div class="form-group">
+        <label for="user-password">Пароль</label>
+        <input type="password" id="user-password" name="userPassword" required>
+      </div>
+      <div class="ctrl-buttons">
+        <a href="index.html" class="btn">Назад</a>
+        <button class="btn" type="submit">Вход</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

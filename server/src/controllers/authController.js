@@ -6,28 +6,34 @@ const { v4: uuidv4 } = require('uuid');
 const { saveUser, findUserByEmail, findUserById, setUserStatusVerifiedById } = require('../helperFunctions/googleSheets');
 
 const postRegisterForm = async(req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     const {
         name = null,
             mailFrom = null,
-            mailTo = null,
             password = null,
+            password2 = null,
     } = req.body;
 
     const { refId = null } = req.query;
 
-    if (!name || !mailFrom || !mailTo || !password) {
+    if (!name || !mailFrom || !password || !password2) {
         return res.status(500).json({ message: 'Not all data for registration is present' })
     } else {
+        if (password !== password2) {
+            return res.status(401).json({ message: 'Passwords don`t match' })
+        }
+
         const id = uuidv4();
 
         try {
+            
             const secret = speakeasy.generateSecret();
 
             const userData = {
                 id,
                 name,
                 mailFrom,
-                mailTo,
+                // mailTo,
                 password: md5(password),
                 secret: secret.base32,
                 otpauthURL: secret.otpauth_url,
@@ -40,7 +46,8 @@ const postRegisterForm = async(req, res) => {
 
             await saveUser(userData);
 
-            return res.sendStatus(200);
+            console.log('SERVER SUCCESS');
+            return res.status(200).json({ message: 'ok'})
         } catch (error) {
             console.error(error)
             return res.status(500).json({ message: 'Error generating the secret' })
