@@ -46,8 +46,7 @@ const postRegisterForm = async(req, res) => {
 
             await saveUser(userData);
 
-            console.log('SERVER SUCCESS');
-            return res.status(200).json({ message: 'ok'})
+            return res.status(200).json({ message: 'ok', id })
         } catch (error) {
             console.error(error)
             return res.status(500).json({ message: 'Error generating the secret' })
@@ -55,7 +54,8 @@ const postRegisterForm = async(req, res) => {
     }
 }
 
-const postLoginForm = async(req, res) => {
+const postLoginForm = async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     const { email, password } = req.body;
 
     try {
@@ -65,7 +65,7 @@ const postLoginForm = async(req, res) => {
             res.status(401).json({ message: 'Wrong authorization data' });
         } else {
             if (user.password === md5(password)) {
-                res.status(200).json({ message: 'Authorized' });
+                res.status(200).json({ message: 'Authorized', id: user.id });
             } else {
                 res.status(401).json({ message: 'Wrong password' });
             }
@@ -81,7 +81,8 @@ const postLoginForm = async(req, res) => {
     }
 };
 
-const get2FA = async(req, res) => {
+const get2FA = async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     const { id } = req.params;
 
     try {
@@ -112,8 +113,9 @@ const get2FA = async(req, res) => {
         }
     }
 }
-const post2FAForm = async(req, res) => {
-    const { token, id } = req.body;
+const post2FAForm = async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    const { token, userId: id } = req.body;
 
     try {
         const user = await findUserById(id);

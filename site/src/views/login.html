@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="../styles/main.css">
+  <script src="../js/fetch/postLoginForm.js" defer></script>
 </head>
 <body>
   <div class="container">
     <h1>Вход</h1>
-    <form action="/api/register" method="post">
+    <form id="login-user-form">
       <div class="form-group">
         <label for="user-email">E-mail</label>
-        <input type="email" id="user-email" name="userEmail" required>
+        <input type="email" id="user-email" name="email" required>
       </div>
       <div class="form-group">
         <label for="user-password">Пароль</label>
-        <input type="password" id="user-password" name="userPassword" required>
+        <input type="password" id="user-password" name="password" required>
       </div>
       <div class="ctrl-buttons">
         <a href="index.html" class="btn">Назад</a>

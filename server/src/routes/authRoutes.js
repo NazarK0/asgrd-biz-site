@@ -10,8 +10,8 @@ router
   .post(urlencodedParser, multer.none(), controller.postRegisterForm);
 router
   .route('/api/login')
-  .post(controller.postLoginForm);
+  .post(urlencodedParser, multer.none(), controller.postLoginForm);
 router.get('/api/2fa/:id', controller.get2FA);
-router.post('/api/2fa', controller.post2FAForm);
+router.post('/api/2fa', urlencodedParser, multer.none(), controller.post2FAForm);
 
 module.exports = router;
