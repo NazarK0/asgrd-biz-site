@@ -43,6 +43,16 @@ body>.container {
   align-items: center;
 }
 
+.container .page-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container .page-data section {
+  padding: 30px;
+}
+
 .title {
   text-align: center;
   margin-bottom: 40px;

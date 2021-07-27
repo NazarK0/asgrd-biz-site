@@ -10,9 +10,46 @@
 </head>
 <body>
   <div class="container">
-    <h1>пользовательськая страница 1</h1>
-    <button class="btn" id="logout-btn">Выход</button>
-    <a href="securePage2.html" class="btn">2 страница</a>
+    <div class="header">
+      <h1>пользовательськая страница 1</h1>
+      <div class="ctrl-buttons">
+        <button class="btn" id="logout-btn">Выход</button>
+        <a href="securePage2.html" class="btn">2 страница</a>
+      </div>
+    </div>
+    <div class="page-data">
+      <section>
+        <form id="register-user-form">
+          <div class="form-group">
+            <label for="user-name">Имя</label>
+            <input type="text" id="user-name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="mailFrom" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="comments">Комментарий</label>
+            <textarea id="comments" name="comments"></textarea>
+          </div>
+          <div class="ctrl-buttons">
+            <a href="index.html" class="btn">Назад</a>
+            <button class="btn" type="submit">Отправить</button>
+          </div>
+        </form>
+      </section>
+      <section>
+        <div class="video-instruction">
+          Видео с инструкцией
+        </div>
+      </section>
+    </div>
+    
+    
   </div>
 </body>
 </html>
